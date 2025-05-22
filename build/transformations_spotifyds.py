@@ -68,4 +68,4 @@ print(tracks_df)
 # Closing connection
 conn.close()
 
-print("\n✅ ETL and queries complete.")
+print("ETL and queries complete.")
