@@ -1,1 +1,58 @@
-.
+Task:ETL process with GCP services
+
+┌────────────────────┐
+│ 1. Composer (Airflow) ─────┐
+└────────┬─────────────┘     │
+         │                   ▼
+         ▼           ┌─────────────────────────┐
+┌─────────────────┐ │PythonOperator: Extract   │
+│ DAG Scheduled    │▶│Download from Kaggle API │
+│ Daily via Airflow│ └─────────────────────────┘
+└─────────────────┘                    │
+                                      ▼
+                         ┌─────────────────────────────┐
+                         │Upload raw CSVs to GCS bucket│
+                         └─────────────────────────────┘
+                                      │
+                                      ▼
+                     ┌─────────────────────────────────────┐
+                     │GCS Sensor triggers BigQuery Load Job│
+                     └─────────────────────────────────────┘
+                                      │
+                                      ▼
+                     ┌─────────────────────────────────────┐
+                     │  BigQuery Table or Staging │
+                     └─────────────────────────────────────┘
+                                      │
+                                      ▼
+                     ┌──────────────────────────────────────┐
+                     │ BigQuery SQL: Transform + Filter     │
+                     │ (radio_mix, popularity, explicit)    │
+                     └──────────────────────────────────────┘
+                                      │
+                                      ▼
+                     ┌─────────────────────────────────────┐
+                     │ BigQuery Final Table (Cleaned Data) │
+                     └─────────────────────────────────────┘
+                                      │
+                                      ▼
+                     ┌─────────────────────────────────────┐
+                     │ DataStudio / Looker (Dashboard)     │
+                     └─────────────────────────────────────┘
+                                      │
+                                      ▼
+                     ┌─────────────────────────────────────┐
+                     │ Monitoring via Stackdriver Logging  │
+                     │ + Airflow Monitoring                 │
+                     └─────────────────────────────────────┘
+
+
+
+Made use of GCP services:
+BigQuery: Data warehouse for large-scale data analytics
+Cloud Storage: Object storage for storing and serving user-generated content.
+Composer: A fully managed, scalable orchestration service built on Apache Airflow, designed for automa>ng,
+scheduling, and monitoring workflows in the cloud.
+Looker Studio: A dashboard and reporting tool for creating visualizations and reports.
+
+
