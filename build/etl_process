@@ -21,7 +21,7 @@ Task:ETL process with GCP services
                                       │
                                       ▼
                      ┌─────────────────────────────────────┐
-                     │  BigQuery Table or Staging │
+                     │      BigQuery Staging Table
                      └─────────────────────────────────────┘
                                       │
                                       ▼
